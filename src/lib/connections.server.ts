@@ -222,7 +222,7 @@ export async function fetchHackerrank(username: string): Promise<Connection> {
   if (!res.ok) throw new Error(`HackerRank lookup failed [${res.status}]: ${text.slice(0, 200)}`);
   const body = JSON.parse(text) as { model?: Record<string, unknown> };
   const model = body.model;
-  if (!model?.username) throw new Error(`No HackerRank user named "${username}"`);
+  if (!model?.['username']) throw new Error(`No HackerRank user named "${username}"`);
   return {
     provider: "hackerrank",
     username: String(model['username']),
