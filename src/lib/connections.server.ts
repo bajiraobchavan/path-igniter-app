@@ -128,17 +128,17 @@ export async function exchangeGithub(code: string, origin: string): Promise<Conn
 
   return {
     provider: "github",
-    username: String(user.login ?? ""),
-    displayName: (user.name as string) ?? (user.login as string),
-    avatarUrl: user.avatar_url as string,
+    username: String(user['login'] ?? ""),
+    displayName: (user['name'] as string) ?? (user['login'] as string),
+    avatarUrl: user['avatar_url'] as string,
     accessToken: token.access_token,
     connectedAt: new Date().toISOString(),
     profile: {
-      publicRepos: user.public_repos,
-      followers: user.followers,
-      bio: user.bio,
-      company: user.company,
-      location: user.location,
+      publicRepos: user['public_repos'],
+      followers: user['followers'],
+      bio: user['bio'],
+      company: user['company'],
+      location: user['location'],
     },
   };
 }
@@ -171,12 +171,12 @@ export async function exchangeLinkedin(code: string, origin: string): Promise<Co
 
   return {
     provider: "linkedin",
-    username: String(me.email ?? me.sub ?? "linkedin-user"),
-    displayName: (me.name as string) ?? "LinkedIn member",
-    avatarUrl: me.picture as string,
+    username: String(me['email'] ?? me['sub'] ?? "linkedin-user"),
+    displayName: (me['name'] as string) ?? "LinkedIn member",
+    avatarUrl: me['picture'] as string,
     accessToken: token.access_token,
     connectedAt: new Date().toISOString(),
-    profile: { locale: me.locale, email: me.email },
+    profile: { locale: me['locale'], email: me['email'] },
   };
 }
 
@@ -206,10 +206,10 @@ export async function fetchLeetcode(username: string): Promise<Connection> {
   return {
     provider: "leetcode",
     username: user.username,
-    displayName: (user.profile?.realName as string) || user.username,
-    avatarUrl: user.profile?.userAvatar as string,
+    displayName: (user.profile?.['realName'] as string) || user.username,
+    avatarUrl: user.profile?.['userAvatar'] as string,
     connectedAt: new Date().toISOString(),
-    profile: { ranking: user.profile?.ranking, solved: user.submitStatsGlobal },
+    profile: { ranking: user.profile?.['ranking'], solved: user.submitStatsGlobal },
   };
 }
 
@@ -225,10 +225,10 @@ export async function fetchHackerrank(username: string): Promise<Connection> {
   if (!model?.username) throw new Error(`No HackerRank user named "${username}"`);
   return {
     provider: "hackerrank",
-    username: String(model.username),
-    displayName: (model.name as string) || String(model.username),
-    avatarUrl: model.avatar as string,
+    username: String(model['username']),
+    displayName: (model['name'] as string) || String(model['username']),
+    avatarUrl: model['avatar'] as string,
     connectedAt: new Date().toISOString(),
-    profile: { level: model.level, school: model.school, country: model.country },
+    profile: { level: model['level'], school: model['school'], country: model['country'] },
   };
 }
