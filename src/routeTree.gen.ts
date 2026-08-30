@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicOauthProviderCallbackRouteImport } from './routes/api/public/oauth.$provider.callback'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicOauthProviderCallbackRoute =
+  ApiPublicOauthProviderCallbackRouteImport.update({
+    id: '/api/public/oauth/$provider/callback',
+    path: '/api/public/oauth/$provider/callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/oauth/$provider/callback': typeof ApiPublicOauthProviderCallbackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/oauth/$provider/callback': typeof ApiPublicOauthProviderCallbackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/oauth/$provider/callback': typeof ApiPublicOauthProviderCallbackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/public/oauth/$provider/callback'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/oauth/$provider/callback'
+  id: '__root__' | '/' | '/api/public/oauth/$provider/callback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicOauthProviderCallbackRoute: typeof ApiPublicOauthProviderCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/oauth/$provider/callback': {
+      id: '/api/public/oauth/$provider/callback'
+      path: '/api/public/oauth/$provider/callback'
+      fullPath: '/api/public/oauth/$provider/callback'
+      preLoaderRoute: typeof ApiPublicOauthProviderCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicOauthProviderCallbackRoute: ApiPublicOauthProviderCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
