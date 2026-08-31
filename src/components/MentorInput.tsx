@@ -61,16 +61,27 @@ export function MentorInput() {
       <div className="flex flex-col items-center gap-4 rounded-[22px] bg-card/95 px-5 py-6 text-center backdrop-blur-sm">
         <p className="text-sm font-medium text-card-foreground">Ask your AI mentor anything</p>
 
-        <button
-          type="button"
-          onClick={startVoice}
-          aria-label="Voice input"
-          className={`grid size-20 place-items-center rounded-full bg-secondary transition-all hover:scale-105 active:scale-95 ${
-            listening ? "text-primary ring-2 ring-primary ring-offset-2 ring-offset-card" : "text-muted-foreground"
-          }`}
-        >
-          <Mic className="size-9" />
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={startVoice}
+            aria-label="Voice input"
+            className={`grid size-20 place-items-center rounded-full bg-secondary transition-all hover:scale-105 active:scale-95 ${
+              listening ? "text-primary ring-2 ring-primary ring-offset-2 ring-offset-card" : "text-muted-foreground"
+            }`}
+          >
+            <Mic className="size-9" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => speak(MENTOR_GREETING)}
+            aria-label="Speak greeting"
+            className="grid size-14 place-items-center rounded-full bg-secondary text-muted-foreground transition-all hover:scale-105 hover:text-primary active:scale-95"
+          >
+            <Volume2 className="size-6" />
+          </button>
+        </div>
 
         <div className="flex w-full max-w-xs items-center gap-2 rounded-full border border-border bg-background/60 px-4 py-2">
           <input
