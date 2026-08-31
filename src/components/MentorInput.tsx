@@ -25,7 +25,7 @@ export function MentorInput() {
       onend: () => void;
     })();
     recognition.lang = "en-US";
-    recognition.onresult = (e) => setValue(e.results[0][0].transcript);
+    recognition.onresult = (e) => setValue(e.results?.[0]?.[0]?.transcript ?? "");
     recognition.onerror = () => toast.error("Couldn't hear that.");
     recognition.onend = () => setListening(false);
     setListening(true);
