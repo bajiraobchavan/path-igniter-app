@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Mic, ArrowUp } from "lucide-react";
 import { toast } from "sonner";
 
 export function MentorInput() {
   const [value, setValue] = useState("");
   const [listening, setListening] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const startVoice = () => {
     const SR =
@@ -40,31 +41,39 @@ export function MentorInput() {
         toast("Your mentor will answer once AI is connected.");
         setValue("");
       }}
-      className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2"
+      className="gradient-hot rounded-3xl p-1"
     >
-      <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Ask your mentor..."
-        className="h-9 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-      />
-      <button
-        type="button"
-        onClick={startVoice}
-        aria-label="Voice input"
-        className={`grid size-8 place-items-center rounded-full transition-colors hover:bg-secondary ${
-          listening ? "text-primary" : "text-muted-foreground"
-        }`}
-      >
-        <Mic className="size-4" />
-      </button>
-      <button
-        type="submit"
-        aria-label="Send"
-        className="grid size-8 place-items-center rounded-full bg-secondary text-foreground transition-colors hover:bg-accent"
-      >
-        <ArrowUp className="size-4" />
-      </button>
+      <div className="flex flex-col items-center gap-4 rounded-[22px] bg-card/95 px-5 py-6 text-center backdrop-blur-sm">
+        <p className="text-sm font-medium text-card-foreground">Ask your AI mentor anything</p>
+
+        <button
+          type="button"
+          onClick={startVoice}
+          aria-label="Voice input"
+          className={`grid size-20 place-items-center rounded-full bg-secondary transition-all hover:scale-105 active:scale-95 ${
+            listening ? "text-primary ring-2 ring-primary ring-offset-2 ring-offset-card" : "text-muted-foreground"
+          }`}
+        >
+          <Mic className="size-9" />
+        </button>
+
+        <div className="flex w-full max-w-xs items-center gap-2 rounded-full border border-border bg-background/60 px-4 py-2">
+          <input
+            ref={inputRef}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Ask your mentor..."
+            className="h-9 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+          />
+          <button
+            type="submit"
+            aria-label="Send"
+            className="grid size-8 place-items-center rounded-full bg-secondary text-foreground transition-colors hover:bg-accent"
+          >
+            <ArrowUp className="size-4" />
+          </button>
+        </div>
+      </div>
     </form>
   );
 }
