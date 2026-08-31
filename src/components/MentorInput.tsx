@@ -1,6 +1,21 @@
 import { useState, useRef } from "react";
-import { Mic, ArrowUp } from "lucide-react";
+import { Mic, ArrowUp, Volume2 } from "lucide-react";
 import { toast } from "sonner";
+
+const MENTOR_GREETING = "hiii , How can help you genus !!";
+
+function speak(text: string) {
+  if (typeof window === "undefined" || !window.speechSynthesis) {
+    toast.error("Speech synthesis isn't supported in this browser.");
+    return;
+  }
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 1;
+  utterance.pitch = 1.05;
+  utterance.lang = "en-US";
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}
 
 export function MentorInput() {
   const [value, setValue] = useState("");
